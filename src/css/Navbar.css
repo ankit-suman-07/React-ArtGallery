@@ -1,0 +1,28 @@
+nav {
+    border: 2px solid #333333;
+    border-radius: 10px;
+    background-color: #222222;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.nav-logo {
+    border: 2px solid black;
+    margin-left: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.nav-menu {
+    border: 2px solid black;
+    margin-right: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+}

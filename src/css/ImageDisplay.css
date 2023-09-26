@@ -1,0 +1,35 @@
+.image-display {
+    /* border: 2px solid black; */
+    width: 100%;
+    columns: 5;
+}
+
+.image-card {
+    /* border: 2px solid black; */
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.image-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.image-heart {
+    border: 2px solid black;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+}
+
+
+@media screen and (max-width: 600px) {
+    .image-display {
+        /* border: 2px solid black; */
+        columns: 100px 2;
+    }
+}
