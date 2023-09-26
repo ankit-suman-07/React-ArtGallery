@@ -5,7 +5,7 @@ import { API_KEY } from '../helper/API';
 
 export const ImageDisplay = () => {
     const [images, setImages] = useState([]);
-    const query = 'Rare';
+    const query = 'Art';
 
 
     const fetchImages = async () => {
