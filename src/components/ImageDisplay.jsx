@@ -6,10 +6,11 @@ import { API_KEY } from '../helper/API';
 export const ImageDisplay = () => {
     const [images, setImages] = useState([]);
     const query = 'Art';
+    const perPage = 50;
 
 
     const fetchImages = async () => {
-        const data = await axios.get(`https://pixabay.com/api/?key=${API_KEY}&q=${query}&per_page=50`);
+        const data = await axios.get(`https://pixabay.com/api/?key=${API_KEY}&q=${query}&per_page=${perPage}`);
         console.log(data.data.hits);
         setImages(data.data.hits);
 

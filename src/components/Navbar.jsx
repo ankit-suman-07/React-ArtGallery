@@ -16,6 +16,12 @@ export const Navbar = () => {
                 Abstract
                 Sculpture
             </div>
+            <div className='nav-user' >
+                <button>Logout</button>
+                <div className='nav-profile' >
+                    User
+                </div>
+            </div>
         </nav>
     )
 }
