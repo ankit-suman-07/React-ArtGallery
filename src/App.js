@@ -13,16 +13,16 @@ function App() {
     <div className="App">
       <UserProvider>
         <Router>
-          <Navbar />
+          {/* <Navbar /> */}
           <Routes>
             <Route path="/" element={<SignUp />} />
             <Route path="/home" element={<Home />} />
             <Route path="/favourites" element={<Favourites />} />
           </Routes>
         </Router>
-        <header className="App-header">
+        {/* <header className="App-header">
         </header>
-        <Home />
+        <Home /> */}
       </UserProvider>
     </div >
 

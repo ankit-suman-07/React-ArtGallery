@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { auth, provider } from '../helper/firebase';
 
 // Create a new context
 const UserContext = createContext();
@@ -18,8 +19,28 @@ export function UserProvider({ children }) {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     };
 
+    const signOut = () => {
+        // writeExpenses();
+        auth.signOut();
+        console.log("Logged Out");
+        setLoggedIn(false);
+        setUserMail("");
+        setUserPhoto("");
+        setUserName("");
+        window.location.href = '/';
+    }
+
     return (
-        <UserContext.Provider value={{ theme, toggleTheme, loggedIn, setLoggedIn }}>
+        <UserContext.Provider value={
+            {
+                theme, toggleTheme,
+                loggedIn, setLoggedIn,
+                userMail, setUserMail,
+                userPhoto, setUserPhoto,
+                username, setUserName,
+                favourites, setFavourites,
+                signOut,
+            }}>
             {children}
         </UserContext.Provider>
     );

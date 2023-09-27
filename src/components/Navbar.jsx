@@ -1,7 +1,11 @@
 import React from 'react';
+import signOut from "../pages/SignUp";
 import "../css/Navbar.css";
+import { useData } from '../helper/UserContext';
+
 
 export const Navbar = () => {
+    const { signOut } = useData();
     return (
         <nav>
             <div className='nav-logo' >
@@ -17,7 +21,7 @@ export const Navbar = () => {
                 Sculpture
             </div>
             <div className='nav-user' >
-                <button>Logout</button>
+                <button onClick={signOut} >Logout</button>
                 <div className='nav-profile' >
                     User
                 </div>
