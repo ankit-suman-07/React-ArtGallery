@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { signInWithPopup } from "firebase/auth";
+import React, { useState, useEffect } from 'react';
+import { signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth, provider } from '../helper/firebase';
 import { fetchData } from '../helper/firestore';
 import { writeExpenses } from "../helper/firestoreWrite";
@@ -12,36 +12,59 @@ import CompBG from "../assets/background-pc.jpg";
 import GoogleLogo from "../assets/google.png";
 
 export const SignUp = () => {
-    // const [loggedIn, setLoggedIn] = useState(false);
-    const { loggedIn, setLoggedIn, userMail, setUserMail, userPhoto, setUserPhoto, setUserName } = useData();
+    const { setLoggedIn, setUserMail, setUserPhoto, setUserName, updateUser } = useData();
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, you can access user data here
+                console.log("Logged In");
+                const newLoggedIn = true;
+                const newUserMail = user.email;
+                const newUserPhoto = user.photoURL;
+                const newUsername = user.displayName;
+
+                // Set the context state variables
+                setLoggedIn(newLoggedIn);
+                setUserMail(newUserMail);
+                setUserPhoto(newUserPhoto);
+                setUserName(newUsername);
+                updateUser({ newLoggedIn, newUserMail, newUserPhoto, newUsername });
+
+                // Redirect after the state updates
+                window.location.href = '/home';
+            } else {
+                // User is signed out
+                console.log("Logged Out");
+            }
+        });
+
+        // Clean up the listener when the component unmounts
+        return () => unsubscribe();
+    }, [setLoggedIn, setUserMail, setUserPhoto, setUserName, updateUser]);
 
     const googleSignUp = () => {
-        signInWithPopup(auth, provider).then((data) => {
-            console.log("Logged In");
-            setLoggedIn(true);
-            setUserMail(data.user.email);
-            setUserPhoto(data.user.photoURL);
-            setUserName(data.user.displayName);
-            fetchData();
-            window.location.href = '/home';
+        signInWithRedirect(auth, provider)
+            .catch((error) => {
+                console.error("Error signing in:", error);
+            });
+    };
 
-        })
-    }
 
 
     return (
         <div className='signup-page' >
 
             <div className='banner' >
-                <div class="text-box">
-                    Welcome to <span class="text-design one">Artify</span> - Your Gateway to <span
-                        class="text-design two">Extraordinary</span> Artistry!
-                    Discover curated, <span class="text-design three">Awe-inspiring</span> artworks chosen just for you.
-                    <span class="text-design four">Immerse</span> yourself in a world
+                <div className="text-box">
+                    Welcome to <span className="text-design one">Artify</span> - Your Gateway to <span
+                        className="text-design two">Extraordinary</span> Artistry!
+                    Discover curated, <span className="text-design three">Awe-inspiring</span> artworks chosen just for you.
+                    <span className="text-design four">Immerse</span> yourself in a world
                     of
-                    <span class="text-design five">Limitless</span> artistic
-                    expression. <span class="text-design six">Explore</span>, appreciate, and adorn your life with the
-                    <span class="text-design seven">Beauty</span> of fine art.
+                    <span className="text-design five">Limitless</span> artistic
+                    expression. <span className="text-design six">Explore</span>, appreciate, and adorn your life with the
+                    <span className="text-design seven">Beauty</span> of fine art.
                     SignUp below and enjoy!!!
                 </div>
             </div>

@@ -6,7 +6,7 @@ const spendsDoc = doc(db, 'favcollect', 'favdoc');
 export function writeExpenses() {
     // Create an array of objects for each entry
     const docData = {
-        ID: ["qwerty", "apple"],
+        ID: ["ball", "qwerty", "apple"],
     };
 
     // Use setDoc to write the array of objects to Firestore

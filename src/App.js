@@ -8,21 +8,19 @@ import { SignUp } from './pages/SignUp';
 import { Favourites } from "./pages/Favourites";
 
 function App() {
+
   return (
 
     <div className="App">
       <UserProvider>
         <Router>
-          {/* <Navbar /> */}
           <Routes>
             <Route path="/" element={<SignUp />} />
             <Route path="/home" element={<Home />} />
             <Route path="/favourites" element={<Favourites />} />
           </Routes>
         </Router>
-        {/* <header className="App-header">
-        </header>
-        <Home /> */}
+
       </UserProvider>
     </div >
 

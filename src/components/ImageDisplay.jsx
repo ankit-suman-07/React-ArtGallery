@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../css/ImageDisplay.css";
+import { useData } from '../helper/UserContext';
 import { API_KEY } from '../helper/API';
 
-export const ImageDisplay = () => {
+export const ImageDisplay = ({ query }) => {
     const [images, setImages] = useState([]);
-    const query = 'Art';
+
+    const { filter } = useData();
+
+    // const query = 'Art';
     const perPage = 50;
 
 
     const fetchImages = async () => {
-        const data = await axios.get(`https://pixabay.com/api/?key=${API_KEY}&q=${query}&per_page=${perPage}`);
+        const data = await axios.get(`https://pixabay.com/api/?key=${API_KEY}&q=${filter}&per_page=${perPage}`);
         console.log(data.data.hits);
         setImages(data.data.hits);
 
@@ -18,7 +22,7 @@ export const ImageDisplay = () => {
 
     useEffect(() => {
         fetchImages();
-    }, []);
+    }, [filter]);
     return (
         <div className='image-display' >
 

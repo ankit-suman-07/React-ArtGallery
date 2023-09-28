@@ -12,6 +12,19 @@ export function UserProvider({ children }) {
     const [userPhoto, setUserPhoto] = useState("");
     const [username, setUserName] = useState("");
     const [favourites, setFavourites] = useState([]);
+    const [filter, setFilter] = useState("all");
+
+    const updateUser = ({ loggedIn, userMail, userPhoto, username }) => {
+        // Log the values
+        console.log("loggedIn:", loggedIn);
+        console.log("userMail:", userMail);
+        console.log("userPhoto:", userPhoto);
+        console.log("username:", username);
+        setLoggedIn(loggedIn);
+        setUserMail(userMail);
+        setUserPhoto(userPhoto);
+        setUserName(username);
+    }
 
 
     // Toggle between 'light' and 'dark' themes
@@ -39,7 +52,8 @@ export function UserProvider({ children }) {
                 userPhoto, setUserPhoto,
                 username, setUserName,
                 favourites, setFavourites,
-                signOut,
+                filter, setFilter,
+                signOut, updateUser,
             }}>
             {children}
         </UserContext.Provider>
