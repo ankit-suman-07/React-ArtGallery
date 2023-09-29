@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth, provider } from '../helper/firebase';
 import { fetchData } from '../helper/firestore';
 import { writeExpenses } from "../helper/firestoreWrite";
 import { useData } from '../helper/UserContext';
+import { UserProvider } from "../helper/UserContext";
 
 import "../css/SignUp.css";
 
@@ -12,17 +13,25 @@ import CompBG from "../assets/background-pc.jpg";
 import GoogleLogo from "../assets/google.png";
 
 export const SignUp = () => {
-    const { setLoggedIn, setUserMail, setUserPhoto, setUserName, updateUser } = useData();
+    const [loggedIn_, setLoggedIn_] = useState(false);
+    const [userMail_, setUserMail_] = useState("");
+    const [userPhoto_, setUserPhoto_] = useState("");
+    const [username_, setUserName_] = useState("");
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                // User is signed in, you can access user data here
+    const { loggedIn, setLoggedIn, userMail, setUserMail, userPhoto, setUserPhoto, username, setUserName, updateUser } = useData();
+
+    const googleSignUp = () => {
+        signInWithRedirect(auth, provider)
+            .then((data) => {
+                console.log("-------");
+                console.log(data);
                 console.log("Logged In");
+
+                // Update the local state variables
                 const newLoggedIn = true;
-                const newUserMail = user.email;
-                const newUserPhoto = user.photoURL;
-                const newUsername = user.displayName;
+                const newUserMail = data.user.email;
+                const newUserPhoto = data.user.photoURL;
+                const newUsername = data.user.displayName;
 
                 // Set the context state variables
                 setLoggedIn(newLoggedIn);
@@ -31,30 +40,28 @@ export const SignUp = () => {
                 setUserName(newUsername);
                 updateUser({ newLoggedIn, newUserMail, newUserPhoto, newUsername });
 
+                setLoggedIn_(newLoggedIn);
+
                 // Redirect after the state updates
-                window.location.href = '/home';
-            } else {
-                // User is signed out
-                console.log("Logged Out");
-            }
-        });
+                // window.location.href = '/home';
+            }).then(() => {
+                console.log(loggedIn);
 
-        // Clean up the listener when the component unmounts
-        return () => unsubscribe();
-    }, [setLoggedIn, setUserMail, setUserPhoto, setUserName, updateUser]);
-
-    const googleSignUp = () => {
-        signInWithRedirect(auth, provider)
+            })
             .catch((error) => {
                 console.error("Error signing in:", error);
             });
+
     };
 
-
+    useEffect(() => {
+        console.log(loggedIn);
+        console.log(loggedIn_);
+    }, []);
 
     return (
         <div className='signup-page' >
-
+            <UserProvider />
             <div className='banner' >
                 <div className="text-box">
                     Welcome to <span className="text-design one">Artify</span> - Your Gateway to <span
